@@ -70,9 +70,12 @@ $(function(){
 		ctx.strokeStyle = "rgb("+r+","+g+","+b+")";
 		ctx.lineWidth = pW;
 	});
-
 	//全消し
 	$("#erase").click(function(){
+		ctx.clearRect(0,0, canvas.width, canvas.height);
+		socket.emit("erase_fromClient","");
+	});
+	socket.on("erase_fromServer",function(data){
 		ctx.clearRect(0,0, canvas.width, canvas.height);
 	});
 
@@ -123,12 +126,7 @@ $(function(){
 			return "Pen size: "+value;
 		}
 	});
-	// .change(function(){
-	// 	ctx.strokeStyle = $(this).val();
-	// });
-	// $("#penWidth").change(function(){
-	// 	ctx.lineWidth = $(this).val();
-	// });
+
 
 	//画像の保存、サムネイルにしてギャラリーに追加
 	$("#save").click(function(){
@@ -143,7 +141,6 @@ $(function(){
 		});
 
 		$("#gallery").append(link.append(img.addClass("thumbnail")));
-		ctx.clearRect(0,0, canvas.width, canvas.height);
 	});
 
 	//チャットメッセージの送信処理

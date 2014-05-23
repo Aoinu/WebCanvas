@@ -43,4 +43,9 @@ io.sockets.on("connection",function(socket){
 	socket.on("draw_line_fromClient",function(data){
 		socket.broadcast.json.emit("draw_line_fromServer",data);
 	});
+
+	//画面消去の通知を送信元以外のクライアントに転送
+	socket.on("erase_fromClient",function(data){
+		socket.broadcast.emit("erase_fromServer","");
+	});
 });
